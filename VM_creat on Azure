@@ -1,0 +1,18 @@
+Azure Availability Zones
+Azure Availability Zones are physically separate data centers within an Azure region, each equipped with independent power, cooling, and networking infrastructure.
+ This design ensures fault isolation, meaning a failure in one zone, such as a power outage or network issue, does not affect the others.
+ Each zone is a distinct location, and a region with Availability Zone support must have at least three separate zones.
+
+When you deploy a virtual machine (VM) or a Virtual Machine Scale Set (VMSS) and select an Availability Zone (e.g., Zone 1, 2, or 3), you are placing that resource within the corresponding physical data center.
+ Selecting a single zone, like Zone 1, means the VM is created only within that specific zone.
+ However, to achieve high availability and fault tolerance against data center failures, you should deploy your resources across multiple zones.
+ For example, if you select all three zones (1, 2, and 3) during VM creation, Azure will create a separate VM instance in each zone.
+
+For Virtual Machine Scale Sets, you can configure them to be zone-redundant by specifying multiple zones in the deployment configuration, such as "zones": ["1", "2", "3"].
+ This spreads instances across all selected zones, providing a 99.99% SLA for the scale set.
+ The scale set can be configured to balance instances across zones either with best-effort balance (the default) or strict balance.
+ In the event of a zonal outage, instances in the affected zone may be impacted, but those in other zones remain operational.
+ The scale set can continue to scale out by adding new instances to the unaffected zones.
+
+It is important to note that Availability Zones are not a replication mechanism for a single VM. Selecting a zone for a single VM does not automatically create replicas in other zones; you must explicitly configure your deployment to span multiple zones to achieve redundancy.
+ For stateless workloads, it is recommended to use at least two Availability Zones to improve resiliency.
