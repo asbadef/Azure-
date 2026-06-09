@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "yap": {
+      "type": "http",
+      "url": "https://mcp.higgsfield.ai/mcp"
+    }
+  }
+}
